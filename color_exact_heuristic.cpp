@@ -58,7 +58,7 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 	GRBVar** x = new GRBVar*[gd.n];
 	
 	for (i = 0; i < gd.n; i++)
-		x[i] = new GRBVars[gd.n];
+		x[i] = new GRBVar[gd.n];
 		
 	for (i = 0; i < gd.n; i++)
 		for (j = 0; j < gd.n; j++) 
