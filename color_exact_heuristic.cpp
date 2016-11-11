@@ -88,7 +88,7 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 	
 	// Restricao: dois vertices adjacentes nao podem ter a mesma cor
 	
-	for (IncEdgeIt e(gd.g, u); e != INVALID; ++e) {
+	for (EdgeIt e(gd.g); e != INVALID; ++e) {
 		for (j = 0; j < gd.n; j++) {
 			u = nodes[gd.g.u(e)];
 			v = nodes[gd.g.v(e)];
