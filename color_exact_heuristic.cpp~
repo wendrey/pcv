@@ -227,7 +227,7 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 
 	for (i = 0; i < gd.n; i++) {
 		for (j = 0; j < gd.n; j++) {
-			if (x[i][j] % 1) {
+			if (y[j] % 1) {
 				model.addConstr(x[i][j] <= 0.0, "lw_"+itos(i)+"_"+itos(j));
 				model.addConstr(x[i][j] >= 1.0, "gt_"+itos(i)+"_"+itos(j));
 				break;
