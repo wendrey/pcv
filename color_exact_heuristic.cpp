@@ -49,7 +49,7 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 	GRBVars* y = new GRBVar[gd.n];
 	
 	for (j = 0; j < gd.n; j++)
-		y[j] = model.addVar(0.0, 1.0, 0.0, GRB_BINARY, "y_"+itos(j));
+		y[j] = model.addVar(0.0, 1.0, 0.0, GRB_BINARY, "");
 
 	// Variaveis X que indicam se o vertice I possui a cor J
 
@@ -60,7 +60,7 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 		
 	for (i = 0; i < gd.n; i++)
 		for (j = 0; j < gd.n; j++) 
-			x[i][j] = model.addVar(0.0, 1.0, 0.0, GRB_BINARY, "x_"+itos(i)+"_"+itos(j));
+			x[i][j] = model.addVar(0.0, 1.0, 0.0, GRB_BINARY, "");
 
 	// Indica funcao objetivo de minimizacao
 	
@@ -77,14 +77,14 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 		GRBLinExpr expr = 0;
 		for (j = 0; j < gd.n; j++)
 			expr += x[i][j];
-		model.addConstr(expr == 1, "c_"+itos(i));	
+		model.addConstr(expr == 1, "");	
 	}
 
 	// Restricao: um vertice so pode usar uma cor selecionada
 	
 	for (i = 0; i < gd.n; i++)
 		for (j = 0; j < gd.n; j++)
-			model.addConstr(x[i][j] <= y[j], "c_"+itos(i)+"_"+itos(j));	
+			model.addConstr(x[i][j] <= y[j], "");	
 	
 	// Restricao: dois vertices adjacentes nao podem ter a mesma cor
 	
@@ -92,7 +92,7 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 		for (j = 0; j < gd.n; j++) {
 			u = nodes[tsp.g.u(e)];
 			v = nodes[tsp.g.v(e)];
-			model.addConstr(x[u][j] + x[v][j] <= 1, "c_"+itos(u)+"_"+itos(v)+"_"+itos(j));
+			model.addConstr(x[u][j] + x[v][j] <= 1, "");
 		}	
 	}
 	
