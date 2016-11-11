@@ -42,7 +42,7 @@ else
 	CC_ARGS    = -m64 -O2 -Wall -std=c++11 -D_GLIBCXX_USE_CXX11_ABI=0 
 	RELEASE := $(shell uname -r | cut -f 1 -d .)
 	CC_LIB   = -lm -lpthread
-	GUROBI_DIR = /home/ec2013/ra18234/Downloads/gurobi$(VERSION)/$(PLATFORM)
+	GUROBI_DIR = /home/ec2013/ra148234/Downloads/gurobi$(VERSION)/$(PLATFORM)
 endif
 GUROBI_INC = -I$(GUROBI_DIR)/include/
 GUROBI_LIB = -L$(GUROBI_DIR)/lib/  -lgurobi_c++ -lgurobi$(FLAGVERSION)  $(CPPSTDLIB)
