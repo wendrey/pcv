@@ -40,7 +40,7 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 	// Inicializa o modelo
 
 	upperBound = gd.n;
-	GRBEnv* env = GRBEnv();
+	GRBEnv env = GRBEnv();
 	GRBModel model = GRBModel(env);
 	model.set(GRB_StringAttr_ModelName, "GraphColoringProblem");
 	model.getEnv().set(GRB_DoubleParam_TimeLimit, timeLimit);
@@ -48,14 +48,14 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 
 	// Variaveis Y que indicam se a cor J eh selecionada ou nao
 
-	GRBVars* y = new GRBVar[gd.n];
+	GRBVar* y = new GRBVar[gd.n];
 	
 	for (j = 0; j < gd.n; j++)
 		y[j] = model.addVar(0.0, 1.0, 0.0, GRB_BINARY, "");
 
 	// Variaveis X que indicam se o vertice I possui a cor J
 
-	GRBVars** x = new GRBVar*[gd.n];
+	GRBVar** x = new GRBVar*[gd.n];
 	
 	for (i = 0; i < gd.n; i++)
 		x[i] = new GRBVars[gd.n];
@@ -66,7 +66,7 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 
 	// Indica funcao objetivo de minimizacao
 	
-	GRBLinExp obj = 0;
+	GRBLinExpr obj = 0;
 	
 	for (j = 0; j < gd.n; j++)
 		obj += y[j];
