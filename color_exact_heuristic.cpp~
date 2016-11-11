@@ -31,7 +31,7 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 	k = 0;
 	NodeIntMap nodes(gd.g);
 
-	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
+	for (ListGraph::NodeIt n(gd.g); n != INVALID; ++n)
 		nodes[n] = k++;		
 
 	// Inicializa o modelo
@@ -130,7 +130,6 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 
 int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBound, int timeLimit) {
 
-	
 	return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
 
 }

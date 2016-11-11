@@ -31,7 +31,7 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 	k = 0;
 	NodeIntMap nodes(gd.g);
 
-	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
+	for (ListGraph::NodeIt n(gd.g); n != INVALID; ++n)
 		nodes[n] = k++;		
 
 	// Inicializa o modelo
@@ -66,7 +66,7 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 	GRBLinExp obj = 0
 	
 	for (j = 0; j < gd.n; j++)
-		obj += y[j]
+		obj += y[j];
 	
 	model.setObjective(obj,GRB_MINIMIZE);
 	
