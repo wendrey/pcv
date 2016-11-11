@@ -90,8 +90,8 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 	
 	for (IncEdgeIt e(gd.g, u); e != INVALID; ++e) {
 		for (j = 0; j < gd.n; j++) {
-			u = nodes[tsp.g.u(e)];
-			v = nodes[tsp.g.v(e)];
+			u = nodes[gd.g.u(e)];
+			v = nodes[gd.g.v(e)];
 			model.addConstr(x[u][j] + x[v][j] <= 1, "");
 		}	
 	}
