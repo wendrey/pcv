@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <float.h>
+#include <stdlib.h>
 #include <lemon/list_graph.h>
 #include "mygraphlib.h"
 #include "color_exact_heuristic.h"
