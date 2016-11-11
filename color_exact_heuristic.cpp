@@ -56,7 +56,7 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 	GRBVars** x = new GRBVar*[gd.n];
 	
 	for (i = 0; i < gd.n; i++)
-		x[i] = new GRBVars[gd.n]
+		x[i] = new GRBVars[gd.n];
 		
 	for (i = 0; i < gd.n; i++)
 		for (j = 0; j < gd.n; j++) 
@@ -64,7 +64,7 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 
 	// Indica funcao objetivo de minimizacao
 	
-	GRBLinExp obj = 0
+	GRBLinExp obj = 0;
 	
 	for (j = 0; j < gd.n; j++)
 		obj += y[j];
@@ -88,7 +88,7 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 	
 	// Restricao: dois vertices adjacentes nao podem ter a mesma cor
 	
-	for (IncEdgeIt e(tsp.g, u); e != INVALID; ++e) {
+	for (IncEdgeIt e(gd.g, u); e != INVALID; ++e) {
 		for (j = 0; j < gd.n; j++) {
 			u = nodes[tsp.g.u(e)];
 			v = nodes[tsp.g.v(e)];
