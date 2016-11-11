@@ -17,6 +17,8 @@
 #include "color_exact_heuristic.h"
 #include "gurobi_c++.h"
 
+using namespace std;
+
 int colorNaive(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBound, int timeLimit);
 
 //------------------------------------------------------------------------------
