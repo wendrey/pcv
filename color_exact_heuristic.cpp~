@@ -26,6 +26,8 @@ int colorNaive(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 
 int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBound, int timeLimit) {
 
+try {
+
 	int i, j, k;
 	int u, v;
 	bool used;
@@ -131,6 +133,15 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 	upperBound = model.get(GRB_DoubleAttr_ObjBound);
 
 	return 1;
+	
+}
+
+catch (GRBException e) {
+
+	cout << "Error code : " << e.getErrorCode() << endl;
+	cout << e.getMessage() << endl;
+
+}
 	
 }
 
