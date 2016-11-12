@@ -166,7 +166,7 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 	GRBVar* y = new GRBVar[gd.n];
 	
 	for (j = 0; j < gd.n; j++)
-		y[j] = model.addVar(0.0, 1.0, 0.0, GRB_CONTINUOS, "");
+		y[j] = model.addVar(0.0, 1.0, 0.0, GRB_CONTINUOUS, "");
 
 	// Variaveis X que indicam se o vertice I possui a cor J
 
@@ -177,7 +177,7 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 		
 	for (i = 0; i < gd.n; i++)
 		for (j = 0; j < gd.n; j++) 
-			x[i][j] = model.addVar(0.0, 1.0, 0.0, GRB_CONTINUOS, "");
+			x[i][j] = model.addVar(0.0, 1.0, 0.0, GRB_CONTINUOUS, "");
 
 	// Indica funcao objetivo de minimizacao
 	
