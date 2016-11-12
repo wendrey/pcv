@@ -127,6 +127,9 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 
 	lowerBound--;	
 	
+	lowerBound = model.get(GRB_DoubleAttr_ObjVal);
+	upperBound = model.get(GRB_DoubleAttr_ObjBound);
+
 	return 1;
 	
 }
@@ -166,7 +169,7 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 	GRBVar* y = new GRBVar[gd.n];
 	
 	for (j = 0; j < gd.n; j++)
-		y[j] = model.addVar(0.0, 1.0, 0.0, GRB_CONTINUOS, "");
+		y[j] = model.addVar(0.0, 1.0, 0.0, GRB_CONTINUOUS, "");
 
 	// Variaveis X que indicam se o vertice I possui a cor J
 
@@ -177,7 +180,7 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 		
 	for (i = 0; i < gd.n; i++)
 		for (j = 0; j < gd.n; j++) 
-			x[i][j] = model.addVar(0.0, 1.0, 0.0, GRB_CONTINUOS, "");
+			x[i][j] = model.addVar(0.0, 1.0, 0.0, GRB_CONTINUOUS, "");
 
 	// Indica funcao objetivo de minimizacao
 	
@@ -237,7 +240,7 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 						
 		// Heuristica: atribui pelo menos uma cor nova na solucao
 
-		rest = false;
+		rest = true;
 		done = true;
 		max = 0;
 
@@ -254,7 +257,7 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 					
 					if (x[i][j].get(GRB_DoubleAttr_X) >= 0.8) {
 						model.addConstr(x[i][j] == 1, "");
-						rest = true;
+						rest = false;
 					}
 					
 					// Escolhe variavel para nova restricao
@@ -270,7 +273,7 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 		
 		// Restricao: atribui alguma cor de maior valor
 
-		if (rest == false)
+		if (rest == true)
 			model.addConstr(x[a][b] == 1, "");		
 
 	}
@@ -292,6 +295,9 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 	}
 
 	lowerBound--;	
+	
+	lowerBound = model.get(GRB_DoubleAttr_ObjVal);
+	upperBound = model.get(GRB_DoubleAttr_ObjBound);
 	
 	return 1;
 
