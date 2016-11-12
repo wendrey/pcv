@@ -47,7 +47,7 @@ try {
 	GRBModel model = GRBModel(env);
 	model.set(GRB_StringAttr_ModelName, "GraphColoringProblem");
 	model.getEnv().set(GRB_DoubleParam_TimeLimit, timeLimit);
-	model.getEnv().set(GRB_DoubleParam_Cutoff, upperBound);
+//	model.getEnv().set(GRB_DoubleParam_Cutoff, upperBound);
 
 	// Variaveis Y que indicam se a cor J eh selecionada ou nao
 
