@@ -42,9 +42,7 @@ try {
 
 	// Inicializa o modelo
 
-	cout << "# node: " << gd.n << endl;	
-	
-	upperBound = gd.n;
+	upperBound = gd.n + 1;
 	GRBEnv env = GRBEnv();
 	GRBModel model = GRBModel(env);
 	model.set(GRB_StringAttr_ModelName, "GraphColoringProblem");
