@@ -106,6 +106,8 @@ try {
 	model.update();
 	model.optimize();
 
+	cout << "---------- ---------- FINISHED GUROBI ---------- ----------" << endl;
+
 	// Retorna solucao ingenua
 
 	if (model.get(GRB_IntAttr_Status) != GRB_OPTIMAL) 
