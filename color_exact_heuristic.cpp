@@ -113,6 +113,8 @@ try {
 	if (model.get(GRB_IntAttr_Status) != GRB_OPTIMAL) 
 		return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
 
+	cout << "---------- ---------- OPTIMIZED SOLUTION ---------- ----------" << endl;
+
 	// Retorna solucao otima
 
 	lowerBound = 1;	
@@ -128,6 +130,8 @@ try {
 		if (used)
 			lowerBound++;
 	}
+
+	cout << "---------- ---------- GETTING BOUNDS ---------- ----------" << endl;
 
 	lowerBound--;	
 	
