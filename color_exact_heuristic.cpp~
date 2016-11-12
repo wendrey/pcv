@@ -106,20 +106,22 @@ try {
 	model.update();
 	model.optimize();
 
+	cout << "---------- ---------- FINISHED GUROBI ---------- ----------" << endl;
+
 	// Retorna solucao ingenua
 
 	if (model.get(GRB_IntAttr_Status) != GRB_OPTIMAL) 
 		return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
 
-	// Retorna solucao otima
+	cout << "---------- ---------- OPTIMIZED SOLUTION ---------- ----------" << endl;
 
-	cout << "---------- ---------- FINISHED GUROBI ---------- ----------" << endl;
+	// Retorna solucao otima
 
 	lowerBound = 1;	
 	
 	for (j = 0; j < gd.n; j++) {
 		used = false;
-		for (NodeIt n(gd.g); n != INVALID; ++i) {
+		for (NodeIt n(gd.g); n != INVALID; ++n) {
 			if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1) {
 				color[n] = lowerBound;
 				used = true;
@@ -128,6 +130,8 @@ try {
 		if (used)
 			lowerBound++;
 	}
+
+	cout << "---------- ---------- GETTING BOUNDS ---------- ----------" << endl;
 
 	lowerBound--;	
 	

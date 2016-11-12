@@ -121,7 +121,7 @@ try {
 	
 	for (j = 0; j < gd.n; j++) {
 		used = false;
-		for (NodeIt n(gd.g); n != INVALID; ++i) {
+		for (NodeIt n(gd.g); n != INVALID; ++n) {
 			if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1) {
 				color[n] = lowerBound;
 				used = true;
