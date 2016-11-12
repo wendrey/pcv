@@ -42,6 +42,8 @@ try {
 
 	// Inicializa o modelo
 
+	cout << "# node: " << gd.n << endl;	
+	
 	upperBound = gd.n;
 	GRBEnv env = GRBEnv();
 	GRBModel model = GRBModel(env);
