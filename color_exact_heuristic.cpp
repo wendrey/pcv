@@ -261,9 +261,6 @@ try {
 		done = true;
 		max = 0;
 
-		lowerBound = model.get(GRB_DoubleAttr_ObjBound);
-		upperBound = model.get(GRB_DoubleAttr_ObjVal);
-
 		for (i = 0; i < gd.n; i++) {
 			for (j = 0; j < gd.n; j++) {
 
@@ -295,7 +292,7 @@ try {
 		
 		// Restricao: atribui alguma cor de maior valor
 
-		if (rest == true)
+		if (done == false && rest == true)
 			model.addConstr(x[a][b] == 1, "");		
 
 	}
@@ -320,8 +317,8 @@ try {
 
 	lowerBound--;	
 		
-//	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
-//	upperBound = model.get(GRB_DoubleAttr_ObjVal);
+	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
+	upperBound = model.get(GRB_DoubleAttr_ObjVal);
 	
 	return 1;
 
