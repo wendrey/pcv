@@ -161,7 +161,7 @@ try {
 
 	k = 0;
 	NodeIntMap nodes(gd.g);
-	NodeBollMap fixed(gd.g);
+	NodeBoolMap fixed(gd.g);
 
 	for (ListGraph::NodeIt n(gd.g); n != INVALID; ++n) {
 		nodes[n] = k++;		
