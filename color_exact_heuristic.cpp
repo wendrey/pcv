@@ -258,7 +258,7 @@ try {
 
 		// Trata inviabilidade
 		
-		if (model.get(GRB_IntAttr_Status) == INFEASIBLE) 
+		if (model.get(GRB_IntAttr_Status) == GRB_INFEASIBLE) 
 			done = true;
 						
 		// Trata restricao de tempo
@@ -284,7 +284,7 @@ try {
 			upperBound++;
 	}
 	
-	for (NodeIt n(gd.n); n != INVALID; ++n)
+	for (NodeIt n(gd.g); n != INVALID; ++n)
 		if (color[n] == 0)
 			color[n] = upperBound++;
 	
