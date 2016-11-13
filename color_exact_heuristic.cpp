@@ -103,6 +103,8 @@ try {
 	
 	// Resolve o modelo
 	
+	cout << "---------- ---------- RESOLVE O MODELO ---------- ----------" << endl;
+
 	model.update();
 	model.optimize();
 
@@ -112,6 +114,8 @@ try {
 		return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
 
 	// Retorna solucao otima
+
+	cout << "---------- ---------- ATRIBUI SOLUCAO ---------- ----------" << endl;
 
 	lowerBound = 1;	
 	
