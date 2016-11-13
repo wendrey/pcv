@@ -104,7 +104,7 @@ try {
 	// Atribui a solucao
 
 	for (j = 0; j < gd.n; j++) {
-		for (NodeIt n(gd.g); n != INVALID; ++n) {
+		for (NodeIt n(gd.g); n != INVALID; ++n) 
 			if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1)
 				color[n] = j;
 	
