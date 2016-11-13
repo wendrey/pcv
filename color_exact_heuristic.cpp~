@@ -29,7 +29,6 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 try {
 
 	int i, j, k;
-	int u, v;
 	bool used;
 
 	// Associa um vertice a uma posicao
@@ -151,8 +150,8 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 
 try {
 
-	int i, j;
-	int k, v;
+	int i, j, k;
+	Node v;
 	double max;
 	bool used, done;
 	clock_t t = clock();
@@ -257,7 +256,7 @@ try {
 		k = -1;
 
 		for (j = 0; j < gd.n; j++) {
-			for (NodeIt n(gd.n); n != INVALID; ++n) {
+			for (NodeIt n(gd.g); n != INVALID; ++n) {
 				if (x[nodes[n]][j].get(GRB_DoubleAttr_X) > 0.5 && fixed[n] == false) {
 					model.addConstr(x[nodes[n]][j] == 1, "");
 					fixed[n] = true;
