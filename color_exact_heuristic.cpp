@@ -103,8 +103,6 @@ try {
 	
 	// Resolve o modelo
 	
-	cout << "---------- ---------- RESOLVE O MODELO ---------- ----------" << endl;
-
 	model.update();
 	model.optimize();
 
@@ -114,8 +112,6 @@ try {
 		return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
 
 	// Retorna solucao otima
-
-	cout << "---------- ---------- ATRIBUI SOLUCAO ---------- ----------" << endl;
 
 	lowerBound = 1;	
 	
@@ -156,6 +152,8 @@ return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
 /* Algoritmo ingenuo para o problema de coloracao de vertices */
 
 int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBound, int timeLimit) {
+
+try {
 
 	int i, j, k;
 	int u, v;
@@ -303,11 +301,11 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 
 	cout << "---------- ---------- ATRIBUI SOLUCAO ---------- ----------" << endl;
 
-	lowerBound = 1;	
+lowerBound = 1;	
 	
 	for (j = 0; j < gd.n; j++) {
 		used = false;
-		for (NodeIt n(gd.g); n != INVALID; ++i) {
+		for (NodeIt n(gd.g); n != INVALID; ++n) {
 			if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1) {
 				color[n] = lowerBound;
 				used = true;
@@ -318,11 +316,22 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 	}
 
 	lowerBound--;	
-	
+		
 	lowerBound = model.get(GRB_DoubleAttr_ObjVal);
 	upperBound = model.get(GRB_DoubleAttr_ObjBound);
 	
 	return 1;
+
+}
+
+catch (GRBException e) {
+
+	cout << "Error code : " << e.getErrorCode() << endl;
+	cout << e.getMessage() << endl;
+
+}
+
+return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
 
 }
 

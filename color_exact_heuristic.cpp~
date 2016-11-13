@@ -153,6 +153,8 @@ return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
 
 int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBound, int timeLimit) {
 
+try {
+
 	int i, j, k;
 	int u, v;
 	int a, b;
@@ -303,7 +305,7 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 	
 	for (j = 0; j < gd.n; j++) {
 		used = false;
-		for (NodeIt n(gd.g); n != INVALID; ++i) {
+		for (NodeIt n(gd.g); n != INVALID; ++n) {
 			if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1) {
 				color[n] = lowerBound;
 				used = true;
@@ -319,6 +321,17 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 	upperBound = model.get(GRB_DoubleAttr_ObjBound);
 	
 	return 1;
+
+}
+
+catch (GRBException e) {
+
+	cout << "Error code : " << e.getErrorCode() << endl;
+	cout << e.getMessage() << endl;
+
+}
+
+return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
 
 }
 
