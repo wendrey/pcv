@@ -261,6 +261,9 @@ try {
 		done = true;
 		max = 0;
 
+		lowerBound = model.get(GRB_DoubleAttr_ObjBound);
+		upperBound = model.get(GRB_DoubleAttr_ObjVal);
+
 		for (i = 0; i < gd.n; i++) {
 			for (j = 0; j < gd.n; j++) {
 
@@ -301,7 +304,7 @@ try {
 
 	cout << "---------- ---------- ATRIBUI SOLUCAO ---------- ----------" << endl;
 
-lowerBound = 1;	
+	lowerBound = 1;	
 	
 	for (j = 0; j < gd.n; j++) {
 		used = false;
@@ -317,8 +320,8 @@ lowerBound = 1;
 
 	lowerBound--;	
 		
-	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
-	upperBound = model.get(GRB_DoubleAttr_ObjVal);
+//	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
+//	upperBound = model.get(GRB_DoubleAttr_ObjVal);
 	
 	return 1;
 
