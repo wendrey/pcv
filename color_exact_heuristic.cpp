@@ -252,7 +252,6 @@ try {
 
 		done = true;
 		max = 0;
-		v = -1;
 		k = -1;
 
 		for (j = 0; j < gd.n; j++) {
