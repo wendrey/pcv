@@ -272,6 +272,7 @@ try {
 		if (k >= 0) {
 			model.addConstr(x[nodes[v]][k] == 1, "");		
 			fixed[v] = true;
+			cout << "---------- ADICIONA RESTRICAO ----------" << endl;
 		}
 	
 	}
