@@ -273,6 +273,7 @@ try {
 			model.addConstr(x[nodes[v]][k] == 1, "");		
 			fixed[v] = true;
 			cout << "---------- ADICIONA RESTRICAO ----------" << endl;
+			cout << "Node " << nodes[v] << " Color " << k << endl;
 		}
 	
 	}
