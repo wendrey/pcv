@@ -123,7 +123,6 @@ try {
 	}
 
 	lowerBound--;	
-	cout << "Lower Bound : " << lowerBound << endl;
 	
 	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
 	upperBound = model.get(GRB_DoubleAttr_ObjVal);
@@ -289,6 +288,7 @@ try {
 			if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1) {
 				color[n] = lowerBound;
 				used = true;
+				cout << "Lower Bound : " << lowerBound << endl;
 			}
 		}
 		if (used)
