@@ -106,14 +106,10 @@ try {
 	model.update();
 	model.optimize();
 
-	cout << "---------- ---------- FINISHED GUROBI ---------- ----------" << endl;
-
 	// Retorna solucao ingenua
 
 	if (model.get(GRB_IntAttr_Status) != GRB_OPTIMAL) 
 		return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
-
-	cout << "---------- ---------- OPTIMIZED SOLUTION ---------- ----------" << endl;
 
 	// Retorna solucao otima
 
@@ -131,12 +127,10 @@ try {
 			lowerBound++;
 	}
 
-	cout << "---------- ---------- GETTING BOUNDS ---------- ----------" << endl;
-
 	lowerBound--;	
 	
-	lowerBound = model.get(GRB_DoubleAttr_ObjVal);
-	upperBound = model.get(GRB_DoubleAttr_ObjBound);
+	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
+	upperBound = model.get(GRB_DoubleAttr_ObjVal);
 
 	return 1;
 	
@@ -241,6 +235,8 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 	
 	while (done == false) {
 
+		cout << "---------- ---------- RESOLVE O MODELO ---------- ----------" << endl;
+
 		// Restricao de tempo 
 		
 		if ((timeLimit -= (clock() - t) / CLOCKS_PER_SEC) < 0)
@@ -271,6 +267,8 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 				if (x[i][j].get(GRB_DoubleAttr_X) != 0 && x[i][j].get(GRB_DoubleAttr_X) != 1) {
 
 					done = false;
+			
+					cout << "---------- ---------- ADICIONA RESTRICAO ---------- ----------" << endl;
 					
 					// Restricao: arredonda a escolha da cor
 					
@@ -298,6 +296,8 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 	}
 	
 	// Retorna solucao otima
+
+	cout << "---------- ---------- ATRIBUI SOLUCAO ---------- ----------" << endl;
 
 	lowerBound = 1;	
 	
