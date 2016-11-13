@@ -93,13 +93,9 @@ try {
 	
 	// Restricao: dois vertices adjacentes nao podem ter a mesma cor
 	
-	for (EdgeIt e(gd.g); e != INVALID; ++e) {
-		for (j = 0; j < gd.n; j++) {
-			u = nodes[gd.g.u(e)];
-			v = nodes[gd.g.v(e)];
-			model.addConstr(x[u][j] + x[v][j] <= 1, "");
-		}	
-	}
+	for (EdgeIt e(gd.g); e != INVALID; ++e)
+		for (j = 0; j < gd.n; j++)
+			model.addConstr(x[nodes[gd.g.u(e)]][j] + x[nodes[gd.g.v(e)]][j] <= 1, "");
 	
 	// Resolve o modelo
 	
@@ -155,9 +151,8 @@ int colorHeuristic(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upper
 
 try {
 
-	int i, j, k;
-	int u, v;
-	int a, b;
+	int i, j;
+	int k, v;
 	double max;
 	bool used, done;
 	clock_t t = clock();
@@ -166,9 +161,12 @@ try {
 
 	k = 0;
 	NodeIntMap nodes(gd.g);
+	NodeBollMap fixed(gd.g);
 
-	for (ListGraph::NodeIt n(gd.g); n != INVALID; ++n)
+	for (ListGraph::NodeIt n(gd.g); n != INVALID; ++n) {
 		nodes[n] = k++;		
+		fixed[n] = false;
+	}
 
 	// Inicializa o modelo
 
@@ -223,13 +221,9 @@ try {
 	
 	// Restricao: dois vertices adjacentes nao podem ter a mesma cor
 	
-	for (EdgeIt e(gd.g); e != INVALID; ++e) {
-		for (j = 0; j < gd.n; j++) {
-			u = nodes[gd.g.u(e)];
-			v = nodes[gd.g.v(e)];
-			model.addConstr(x[u][j] + x[v][j] <= 1, "");
-		}	
-	}
+	for (EdgeIt e(gd.g); e != INVALID; ++e)
+		for (j = 0; j < gd.n; j++)
+			model.addConstr(x[nodes[gd.g.u(e)]][j] + x[nodes[gd.g.v(e)]][j] <= 1, "");
 	
 	// Resolve o modelo de PL com heuristica
 	
@@ -259,41 +253,29 @@ try {
 
 		done = true;
 		max = 0;
-		a = -1;
-		b = -1;
+		v = -1;
+		k = -1;
 
-		for (i = 0; i < gd.n; i++) {
-			for (j = 0; j < gd.n; j++) {
-
-				// Verifica as cores ainda nao atribuidas
-
-				if (x[i][j].get(GRB_DoubleAttr_X) != 0 && x[i][j].get(GRB_DoubleAttr_X) != 1) {
-
-					done = false;
-			
-					cout << "---------- ---------- ADICIONA RESTRICAO ---------- ----------" << endl;
-					
-					// Restricao: arredonda a escolha da cor
-					
-					if (x[i][j].get(GRB_DoubleAttr_X) >= 0.8) 
-						model.addConstr(x[i][j] == 1, "");
-					
-					// Escolhe variavel para nova restricao
-									
-					if (x[i][j].get(GRB_DoubleAttr_X) > max) {
-						max = x[i][j].get(GRB_DoubleAttr_X);
-						a = i; b = j;
-					}
-					
+		for (j = 0; j < gd.n; j++) {
+			for (NodeIt n(gd.n); n != INVALID; ++n) {
+				if (x[nodes[n]][j].get(GRB_DoubleAttr_X) > 0.5 && fixed[n] == false) {
+					model.addConstr(x[nodes[n]][j] == 1, "");
+					fixed[n] = true;
+				}
+				else if (x[nodes[n]][j].get(GRB_DoubleAttr_X) > max) {
+					max = x[nodes[n]][j].get(GRB_DoubleAttr_X);
+					v = n; k = j;
 				}
 			}
-		}	
+		}
 		
-		// Restricao: atribui alguma cor de maior valor
+		// Restricao: atribui alguma cor de maior valor 
 
-		if (a >= 0 && b >= 0)
-			model.addConstr(x[a][b] == 1, "");		
-
+		if (k >= 0) {
+			model.addConstr(x[nodes[v]][k] == 1, "");		
+			fixed[v] = true;
+		}
+	
 	}
 	
 	// Retorna solucao otima
