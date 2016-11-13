@@ -317,8 +317,8 @@ lowerBound = 1;
 
 	lowerBound--;	
 		
-	lowerBound = model.get(GRB_DoubleAttr_ObjVal);
-	upperBound = model.get(GRB_DoubleAttr_ObjBound);
+	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
+	upperBound = model.get(GRB_DoubleAttr_ObjVal);
 	
 	return 1;
 
