@@ -280,22 +280,17 @@ try {
 		if (k >= 0) {
 			model.addConstr(x[nodes[v]][k] == 1, "");		
 			fixed[v] = true;
-			cout << "---------- ADICIONA RESTRICAO ----------" << endl;
-			cout << "Node " << nodes[v] << " Color " << k << endl;
 		}
 	
 	}
 	
 	// Retorna solucao otima
 
-	cout << "---------- ---------- ATRIBUI SOLUCAO ---------- ----------" << endl;
-
 	lowerBound = 1;	
 	
 	for (j = 0; j < gd.n; j++) {
 		used = false;
 		for (NodeIt n(gd.g); n != INVALID; ++n) {
-			cout << "Node " << nodes[n] << " Color " << j << " Value " << x[nodes[n]][j].get(GRB_DoubleAttr_X) << endl;
 			if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1) {
 				color[n] = lowerBound;
 				used = true;
@@ -306,7 +301,6 @@ try {
 	}
 
 	lowerBound--;	
-	cout << "Lower Bound : " << lowerBound << endl;
 		
 //	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
 //	upperBound = model.get(GRB_DoubleAttr_ObjVal);
