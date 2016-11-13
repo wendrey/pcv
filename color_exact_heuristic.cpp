@@ -159,7 +159,7 @@ try {
 	int u, v;
 	int a, b;
 	double max;
-	bool used, rest, done;
+	bool used, done;
 	clock_t t = clock();
 
 	// Associa um vertice a uma posicao
@@ -257,9 +257,10 @@ try {
 						
 		// Heuristica: atribui pelo menos uma cor nova na solucao
 
-		rest = true;
 		done = true;
 		max = 0;
+		a = -1;
+		b = -1;
 
 		for (i = 0; i < gd.n; i++) {
 			for (j = 0; j < gd.n; j++) {
@@ -274,10 +275,8 @@ try {
 					
 					// Restricao: arredonda a escolha da cor
 					
-					if (x[i][j].get(GRB_DoubleAttr_X) >= 0.8) {
+					if (x[i][j].get(GRB_DoubleAttr_X) >= 0.8) 
 						model.addConstr(x[i][j] == 1, "");
-						rest = false;
-					}
 					
 					// Escolhe variavel para nova restricao
 									
@@ -292,7 +291,7 @@ try {
 		
 		// Restricao: atribui alguma cor de maior valor
 
-		if (done == false && rest == true)
+		if (a >= 0 && b >= 0)
 			model.addConstr(x[a][b] == 1, "");		
 
 	}
@@ -317,8 +316,8 @@ try {
 
 	lowerBound--;	
 		
-	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
-	upperBound = model.get(GRB_DoubleAttr_ObjVal);
+//	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
+//	upperBound = model.get(GRB_DoubleAttr_ObjVal);
 	
 	return 1;
 
