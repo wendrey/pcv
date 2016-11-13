@@ -252,7 +252,6 @@ try {
 
 		done = true;
 		max = 0;
-		v = -1;
 		k = -1;
 
 		for (j = 0; j < gd.n; j++) {
@@ -296,6 +295,7 @@ try {
 	}
 
 	lowerBound--;	
+	cout << "Lower Bound : " << lowerBound << endl;
 		
 //	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
 //	upperBound = model.get(GRB_DoubleAttr_ObjVal);

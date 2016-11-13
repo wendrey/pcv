@@ -123,6 +123,7 @@ try {
 	}
 
 	lowerBound--;	
+	cout << "Lower Bound : " << lowerBound << endl;
 	
 	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
 	upperBound = model.get(GRB_DoubleAttr_ObjVal);
@@ -295,6 +296,7 @@ try {
 	}
 
 	lowerBound--;	
+	cout << "Lower Bound : " << lowerBound << endl;
 		
 //	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
 //	upperBound = model.get(GRB_DoubleAttr_ObjVal);
