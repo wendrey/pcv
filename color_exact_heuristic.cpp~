@@ -29,7 +29,6 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 try {
 
 	int i, j, k;
-	bool used;
 
 	// Associa um vertice a uma posicao
 
@@ -41,6 +40,7 @@ try {
 
 	// Inicializa o modelo
 
+	lowerBound = 1;
 	upperBound = gd.n + 1;
 	GRBEnv env = GRBEnv();
 	GRBModel model = GRBModel(env);
@@ -71,7 +71,7 @@ try {
 	GRBLinExpr obj = 0;
 	
 	for (j = 0; j < gd.n; j++)
-		obj += y[j];
+		obj += j*y[j];
 	
 	model.setObjective(obj,GRB_MINIMIZE);
 	
@@ -101,33 +101,20 @@ try {
 	model.update();
 	model.optimize();
 
-	// Retorna solucao ingenua
+	// Atribui a solucao
 
-	if (model.get(GRB_IntAttr_Status) != GRB_OPTIMAL) 
-		return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
-
-	// Retorna solucao otima
-
-	lowerBound = 1;	
-	
 	for (j = 0; j < gd.n; j++) {
-		used = false;
 		for (NodeIt n(gd.g); n != INVALID; ++n) {
-			if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1) {
-				color[n] = lowerBound;
-				used = true;
-			}
-		}
-		if (used)
-			lowerBound++;
-	}
-
-	lowerBound--;	
+			if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1)
+				color[n] = j;
 	
 	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
 	upperBound = model.get(GRB_DoubleAttr_ObjVal);
 
-	return 1;
+	if (model.get(GRB_IntAttr_Status) == GRB_OPTIMAL)
+		return 1;	
+		
+	return 0;
 	
 }
 
@@ -169,7 +156,8 @@ try {
 
 	// Inicializa o modelo
 
-	upperBound = gd.n;
+	lowerBound = 1;
+	upperBound = gd.n + 1;
 	GRBEnv env = GRBEnv();
 	GRBModel model = GRBModel(env);
 	model.set(GRB_StringAttr_ModelName, "GraphColoringProblem");
@@ -199,7 +187,7 @@ try {
 	GRBLinExpr obj = 0;
 	
 	for (j = 0; j < gd.n; j++)
-		obj += y[j];
+		obj += j*y[j];
 	
 	model.setObjective(obj,GRB_MINIMIZE);
 
@@ -229,26 +217,14 @@ try {
 	done = false;
 	
 	while (done == false) {
-
-		cout << "---------- ---------- RESOLVE O MODELO ---------- ----------" << endl;
-
-		// Restricao de tempo 
-		
-		if ((timeLimit -= (clock() - t) / CLOCKS_PER_SEC) < 0)
-			return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
 			
 		// Resolve o modelo
 	
 		model.getEnv().set(GRB_DoubleParam_TimeLimit, timeLimit);
 		model.update();
 		model.optimize();
-		
-		// Retorna solucao ingenua
 
-		if (model.get(GRB_IntAttr_Status) != GRB_OPTIMAL) 
-			return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
-						
-		// Heuristica: atribui pelo menos uma cor nova na solucao
+		// Heuristica: adiciona nova restricao no modelo
 
 		done = true;
 		max = 0;
@@ -275,37 +251,46 @@ try {
 			}
 		}
 		
-		// Restricao: atribui alguma cor de maior valor 
-
 		if (k >= 0) {
 			model.addConstr(x[nodes[v]][k] == 1, "");		
 			fixed[v] = true;
 		}
-	
+
+		// Trata inviabilidade
+		
+		if (model.get(GRB_IntAttr_Status) == INFEASIBLE) 
+			done = true;
+						
+		// Trata restricao de tempo
+
+		if ((timeLimit -= (clock() - t) / CLOCKS_PER_SEC) < 0)
+			done = true;
+
 	}
 	
-	// Retorna solucao otima
+	// Atribui solucao
 
-	lowerBound = 1;	
+	upperBound = 1;	
 	
 	for (j = 0; j < gd.n; j++) {
 		used = false;
 		for (NodeIt n(gd.g); n != INVALID; ++n) {
 			if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1) {
-				color[n] = lowerBound;
+				color[n] = upperBound;
 				used = true;
 			}
 		}
 		if (used)
-			lowerBound++;
+			upperBound++;
 	}
-
-	lowerBound--;	
-		
-//	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
-//	upperBound = model.get(GRB_DoubleAttr_ObjVal);
 	
-	return 1;
+	for (NodeIt n(gd.n); n != INVALID; ++n)
+		if (color[n] == 0)
+			color[n] = upperBound++;
+	
+	upperBound--;
+		
+	return 0;
 
 }
 
