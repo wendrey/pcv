@@ -241,10 +241,11 @@ try {
 						
 		// Trata restricao de tempo
 
-		if ((timeLimit -= (clock() - t) / CLOCKS_PER_SEC) < 0) {
-			cout << "---------- TIME LIMIT : " << timeLimit << " ----------" << endl;
+		if ((timeLimit -= (clock() - t) / CLOCKS_PER_SEC) < 0)
 			break;
-	}
+
+		cout << "---------- TIME LIMIT : " << timeLimit << " ----------" << endl;
+
 		// Heuristica: adiciona nova restricao no modelo
 
 		done = true;
