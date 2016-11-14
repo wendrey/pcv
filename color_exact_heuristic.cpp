@@ -262,6 +262,7 @@ try {
 				color[n] = upperBound++;
 	
 		upperBound--;
+		lowerBound = model.get(GRB_DoubleAttr_MinBound);
 
 		// Heuristica: adiciona nova restricao no modelo
 
