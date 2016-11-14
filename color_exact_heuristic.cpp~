@@ -150,7 +150,6 @@ try {
 	int i, j, k;
 	Node v;
 	float max;
-	float myTimeLimit = timeLimit;
 	bool used, done;
 	clock_t t = clock();
 
@@ -169,7 +168,7 @@ try {
 	GRBEnv env = GRBEnv();
 	GRBModel model = GRBModel(env);
 	model.set(GRB_StringAttr_ModelName, "GraphColoringProblem");
-//	model.getEnv().set(GRB_DoubleParam_TimeLimit, myTimeLimit);
+	model.getEnv().set(GRB_DoubleParam_TimeLimit, timeLimit);
 	model.getEnv().set(GRB_DoubleParam_Cutoff, upperBound);
 	
 	// Variaveis Y que indicam se a cor J eh selecionada ou nao
@@ -228,7 +227,7 @@ try {
 			
 		// Resolve o modelo
 	
-//		model.getEnv().set(GRB_DoubleParam_TimeLimit, myTimeLimit);
+		model.getEnv().set(GRB_DoubleParam_TimeLimit, timeLimit - ((clock() - t) / CLOCKS_PER_SEC));
 		model.update();
 		model.optimize();
 
@@ -239,10 +238,30 @@ try {
 						
 		// Trata restricao de tempo
 
-		if ((myTimeLimit -= (clock() - t) / CLOCKS_PER_SEC) < 0)
+		if ((timeLimit - ((clock() - t) / CLOCKS_PER_SEC)) < 0)
 			break;
 
-		cout << "---------- TIME LIMIT : " << myTimeLimit << " ----------" << endl;
+		// Atribui solucao
+
+		upperBound = 1;	
+	
+		for (j = 0; j < gd.n; j++) {
+			used = false;
+			for (NodeIt n(gd.g); n != INVALID; ++n) {
+				if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1) {
+					color[n] = upperBound;
+					used = true;
+				}
+			}
+			if (used)
+				upperBound++;
+		}
+	
+		for (NodeIt n(gd.g); n != INVALID; ++n)
+			if (color[n] == 0)
+				color[n] = upperBound++;
+	
+		upperBound--;
 
 		// Heuristica: adiciona nova restricao no modelo
 
@@ -271,28 +290,6 @@ try {
 		
 		if (k >= 0) 
 			model.addConstr(x[nodes[v]][k] == 1, "");
-
-		// Atribui solucao
-
-		upperBound = 1;	
-	
-		for (j = 0; j < gd.n; j++) {
-			used = false;
-			for (NodeIt n(gd.g); n != INVALID; ++n) {
-				if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1) {
-					color[n] = upperBound;
-					used = true;
-				}
-			}
-			if (used)
-				upperBound++;
-		}
-	
-		for (NodeIt n(gd.g); n != INVALID; ++n)
-			if (color[n] == 0)
-				color[n] = upperBound++;
-	
-		upperBound--;
 
 	}
 	
