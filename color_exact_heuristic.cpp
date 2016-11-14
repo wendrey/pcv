@@ -158,12 +158,9 @@ try {
 
 	k = 0;
 	NodeIntMap nodes(gd.g);
-	NodeBoolMap fixed(gd.g);
 
-	for (ListGraph::NodeIt n(gd.g); n != INVALID; ++n) {
+	for (ListGraph::NodeIt n(gd.g); n != INVALID; ++n)
 		nodes[n] = k++;		
-		fixed[n] = false;
-	}
 
 	// Inicializa o modelo
 
@@ -256,14 +253,12 @@ try {
 		for (j = 0; j < gd.n; j++) {
 			for (NodeIt n(gd.g); n != INVALID; ++n) {
 
-				if (fixed[n] == false) {
+				if (x[nodes[n]][j].get(GRB_DoubleAttr_X) != 0.0 && x[nodes[n]][j].get(GRB_DoubleAttr_X) != 1.0) {
 
 					done = false;
 
-					if (x[nodes[n]][j].get(GRB_DoubleAttr_X) > 0.5) {
+					if (x[nodes[n]][j].get(GRB_DoubleAttr_X) > 0.5)
 						model.addConstr(x[nodes[n]][j] == 1, "");
-						fixed[n] = true;
-					}
 
 					else if (x[nodes[n]][j].get(GRB_DoubleAttr_X) > max) {
 						max = x[nodes[n]][j].get(GRB_DoubleAttr_X);
@@ -274,10 +269,8 @@ try {
 			}
 		}
 		
-		if (k >= 0) {
+		if (k >= 0) 
 			model.addConstr(x[nodes[v]][k] == 1, "");
-			fixed[v] = true;
-		}
 
 		// Atribui solucao
 
