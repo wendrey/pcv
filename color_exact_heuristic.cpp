@@ -234,6 +234,16 @@ try {
 		model.update();
 		model.optimize();
 
+		// Trata inviabilidade
+		
+		if (model.get(GRB_IntAttr_Status) == GRB_INFEASIBLE) 
+			break;
+						
+		// Trata restricao de tempo
+
+		if ((timeLimit -= (clock() - t) / CLOCKS_PER_SEC) < 0)
+			break;
+
 		// Heuristica: adiciona nova restricao no modelo
 
 		done = true;
@@ -266,16 +276,6 @@ try {
 			fixed[v] = true;
 		}
 
-		// Trata inviabilidade
-		
-		if (model.get(GRB_IntAttr_Status) == GRB_INFEASIBLE) 
-			done = true;
-						
-		// Trata restricao de tempo
-
-		if ((timeLimit -= (clock() - t) / CLOCKS_PER_SEC) < 0)
-			done = true;
-
 		// Atribui solucao
 
 		upperBound = 1;	
@@ -297,9 +297,11 @@ try {
 				color[n] = upperBound++;
 	
 		upperBound--;
-		lowerBound = model.get(GRB_DoubleAttr_MinBound);
 
 	}
+	
+	if (done == false)
+		return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
 			
 	return 0;
 
