@@ -276,7 +276,7 @@ try {
 
 					done = false;
 
-					if (x[nodes[n]][j].get(GRB_DoubleAttr_X) > 0.5)
+					if (x[nodes[n]][j].get(GRB_DoubleAttr_X) > 0.6)
 						model.addConstr(x[nodes[n]][j] == 1, "");
 
 					else if (x[nodes[n]][j].get(GRB_DoubleAttr_X) > max) {
