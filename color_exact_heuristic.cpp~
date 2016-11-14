@@ -197,7 +197,7 @@ try {
 	GRBLinExpr obj = 0;
 	
 	for (j = 0; j < gd.n; j++)
-		obj += j*y[j];
+		obj += y[j];
 	
 	model.setObjective(obj,GRB_MINIMIZE);
 
