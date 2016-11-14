@@ -71,7 +71,7 @@ try {
 	GRBLinExpr obj = 0;
 	
 	for (j = 0; j < gd.n; j++)
-		obj += j*y[j];
+		obj += y[j];
 	
 	model.setObjective(obj,GRB_MINIMIZE);
 	
@@ -103,10 +103,19 @@ try {
 
 	// Atribui a solucao
 
-	for (j = 0; j < gd.n; j++) 
-		for (NodeIt n(gd.g); n != INVALID; ++n) 
-			if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1)
-				color[n] = j;
+	k = 1;	
+	
+	for (j = 0; j < gd.n; j++) {
+		used = false;
+		for (NodeIt n(gd.g); n != INVALID; ++n) {
+			if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1) {
+				color[n] = k;
+				used = true;
+			}
+		}
+		if (used)
+			k++;
+	}
 	
 	lowerBound = model.get(GRB_DoubleAttr_ObjBound);
 	upperBound = model.get(GRB_DoubleAttr_ObjVal);
@@ -289,6 +298,7 @@ try {
 			color[n] = upperBound++;
 	
 	upperBound--;
+	lowerBound = model.get(GRB_DoubleAttr_MinBound);
 		
 	return 0;
 
