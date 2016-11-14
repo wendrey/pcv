@@ -172,7 +172,7 @@ try {
 	GRBModel model = GRBModel(env);
 	model.set(GRB_StringAttr_ModelName, "GraphColoringProblem");
 	model.getEnv().set(GRB_DoubleParam_TimeLimit, timeLimit);
-	model.getEnv().set(GRB_DoubleParam_Cutoff, upperBound);
+//	model.getEnv().set(GRB_DoubleParam_Cutoff, upperBound);
 	
 	// Variaveis Y que indicam se a cor J eh selecionada ou nao
 
@@ -276,31 +276,31 @@ try {
 		if ((timeLimit -= (clock() - t) / CLOCKS_PER_SEC) < 0)
 			done = true;
 
-	}
-	
-	// Atribui solucao
+		// Atribui solucao
 
-	upperBound = 1;	
+		upperBound = 1;	
 	
-	for (j = 0; j < gd.n; j++) {
-		used = false;
-		for (NodeIt n(gd.g); n != INVALID; ++n) {
-			if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1) {
-				color[n] = upperBound;
-				used = true;
+		for (j = 0; j < gd.n; j++) {
+			used = false;
+			for (NodeIt n(gd.g); n != INVALID; ++n) {
+				if (x[nodes[n]][j].get(GRB_DoubleAttr_X) == 1) {
+					color[n] = upperBound;
+					used = true;
+				}
 			}
+			if (used)
+				upperBound++;
 		}
-		if (used)
-			upperBound++;
+	
+		for (NodeIt n(gd.g); n != INVALID; ++n)
+			if (color[n] == 0)
+				color[n] = upperBound++;
+	
+		upperBound--;
+		lowerBound = model.get(GRB_DoubleAttr_MinBound);
+
 	}
-	
-	for (NodeIt n(gd.g); n != INVALID; ++n)
-		if (color[n] == 0)
-			color[n] = upperBound++;
-	
-	upperBound--;
-	lowerBound = model.get(GRB_DoubleAttr_MinBound);
-		
+			
 	return 0;
 
 }
