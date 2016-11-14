@@ -158,12 +158,9 @@ try {
 
 	k = 0;
 	NodeIntMap nodes(gd.g);
-	NodeBoolMap fixed(gd.g);
 
-	for (ListGraph::NodeIt n(gd.g); n != INVALID; ++n) {
+	for (ListGraph::NodeIt n(gd.g); n != INVALID; ++n)
 		nodes[n] = k++;		
-		fixed[n] = false;
-	}
 
 	// Inicializa o modelo
 
@@ -172,7 +169,7 @@ try {
 	GRBEnv env = GRBEnv();
 	GRBModel model = GRBModel(env);
 	model.set(GRB_StringAttr_ModelName, "GraphColoringProblem");
-	model.getEnv().set(GRB_DoubleParam_TimeLimit, myTimeLimit);
+//	model.getEnv().set(GRB_DoubleParam_TimeLimit, myTimeLimit);
 	model.getEnv().set(GRB_DoubleParam_Cutoff, upperBound);
 	
 	// Variaveis Y que indicam se a cor J eh selecionada ou nao
