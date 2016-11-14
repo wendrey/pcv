@@ -29,6 +29,7 @@ int colorExact(GraphData& gd, NodeIntMap& color, int& lowerBound, int& upperBoun
 try {
 
 	int i, j, k;
+	bool used;
 
 	// Associa um vertice a uma posicao
 
