@@ -241,9 +241,10 @@ try {
 						
 		// Trata restricao de tempo
 
-		if ((timeLimit -= (clock() - t) / CLOCKS_PER_SEC) < 0)
+		if ((timeLimit -= (clock() - t) / CLOCKS_PER_SEC) < 0) {
+			cout << "---------- TIME LIMIT : " << TimeLimit << " ----------" << endl;
 			break;
-
+	}
 		// Heuristica: adiciona nova restricao no modelo
 
 		done = true;
@@ -272,7 +273,7 @@ try {
 		}
 		
 		if (k >= 0) {
-			model.addConstr(x[nodes[v]][k] == 1, "");		
+			model.addConstr(x[nodes[v]][k] == 1, "");
 			fixed[v] = true;
 		}
 
