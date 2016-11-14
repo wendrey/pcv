@@ -149,7 +149,8 @@ try {
 
 	int i, j, k;
 	Node v;
-	double max;
+	float max;
+	float myTimeLimit = timeLimit;
 	bool used, done;
 	clock_t t = clock();
 
@@ -230,7 +231,7 @@ try {
 			
 		// Resolve o modelo
 	
-		model.getEnv().set(GRB_DoubleParam_TimeLimit, timeLimit);
+		model.getEnv().set(GRB_DoubleParam_TimeLimit, myTimeLimit);
 		model.update();
 		model.optimize();
 
@@ -241,7 +242,7 @@ try {
 						
 		// Trata restricao de tempo
 
-		if ((timeLimit -= (clock() - t) / CLOCKS_PER_SEC) < 0)
+		if ((myTimeLimit -= (clock() - t) / CLOCKS_PER_SEC) < 0)
 			break;
 
 		cout << "---------- TIME LIMIT : " << timeLimit << " ----------" << endl;
