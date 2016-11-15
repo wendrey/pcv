@@ -1,0 +1,10 @@
+algorithm  : HEURISTIC
+instance   : in02/myciel4.col.fkm
+elapsedTime: 0 s
+timeLimit  : 30 s
+optimal    : No
+n          : 23
+lowerBound : 1
+upperBound : 5
+k          : 5
+nodes      : 23.1 22.2 21.2 20.2 19.2 18.2 17.2 16.2 15.2 14.2 13.2 12.2 11.1 10.3 9.3 8.3 7.3 6.3 5.1 4.4 3.4 2.1 1.5

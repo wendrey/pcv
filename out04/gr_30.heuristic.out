@@ -1,0 +1,10 @@
+algorithm  : HEURISTIC
+instance   : in04/gr_30
+elapsedTime: 0 s
+timeLimit  : 30 s
+optimal    : No
+n          : 30
+lowerBound : 1
+upperBound : 5
+k          : 5
+nodes      : 1.1 2.2 3.1 4.1 5.1 6.4 7.4 8.1 9.3 10.5 11.5 12.3 13.4 14.5 15.1 16.3 17.4 18.4 19.2 20.5 21.4 22.2 23.2 24.3 25.5 26.4 27.1 28.3 29.5 30.3

@@ -1,0 +1,10 @@
+algorithm  : EXACT
+instance   : in02/myciel4.col.fkm
+elapsedTime: 4 s
+timeLimit  : 30 s
+optimal    : Yes
+n          : 23
+lowerBound : 5
+upperBound : 5
+k          : 5
+nodes      : 23.4 22.5 21.5 20.5 19.5 18.5 17.5 16.5 15.5 14.5 13.5 12.5 11.4 10.1 9.1 8.1 7.1 6.1 5.4 4.3 3.3 2.4 1.2

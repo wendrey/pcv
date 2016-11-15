@@ -1,0 +1,10 @@
+algorithm  : EXACT
+instance   : in/gr_ulysses22
+elapsedTime: 0 s
+timeLimit  : 30 s
+optimal    : Yes
+n          : 22
+lowerBound : 22
+upperBound : 22
+k          : 22
+nodes      : 1.7 2.10 3.14 4.1 5.3 6.6 7.5 8.9 9.12 10.17 11.13 12.11 13.4 14.16 15.18 16.22 17.20 18.15 19.19 20.21 21.2 22.8

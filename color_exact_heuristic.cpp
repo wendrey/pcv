@@ -158,7 +158,7 @@ try {
 	k = 0;
 	NodeIntMap nodes(gd.g);
 
-	for (ListGraph::NodeIt n(gd.g); n != INVALID; ++n)
+	for (ListGraph::NodeIt n(gd.g); n != INVALID; ++n) 
 		nodes[n] = k++;		
 
 	// Inicializa o modelo
@@ -225,8 +225,8 @@ try {
 	
 	while (done == false) {
 			
-		// Resolve o modelo
-	
+		// Atualiza e resolve o modelo
+		
 		model.getEnv().set(GRB_DoubleParam_TimeLimit, timeLimit - ((clock() - t) / CLOCKS_PER_SEC));
 		model.update();
 		model.optimize();
@@ -243,6 +243,9 @@ try {
 
 		// Atribui solucao
 
+		for (ListGraph::NodeIt n(gd.g); n != INVALID; ++n) 
+			color[n] = 0;		
+
 		upperBound = 1;	
 	
 		for (j = 0; j < gd.n; j++) {
@@ -257,7 +260,7 @@ try {
 				upperBound++;
 		}
 	
-		for (NodeIt n(gd.g); n != INVALID; ++n)
+		for (NodeIt n(gd.g); n != INVALID; ++n) 
 			if (color[n] == 0)
 				color[n] = upperBound++;
 	
@@ -293,9 +296,10 @@ try {
 
 	}
 	
-	if (done == false)
-		return colorNaive(gd, color, lowerBound, upperBound, timeLimit);
-			
+	for (NodeIt n(gd.g); n != INVALID; ++n) 
+		if (color[n] == 0)
+			colorNaive(gd, color, lowerBound, upperBound, timeLimit);
+	
 	return 0;
 
 }

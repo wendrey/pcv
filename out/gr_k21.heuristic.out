@@ -1,0 +1,10 @@
+algorithm  : HEURISTIC
+instance   : in/gr_k21
+elapsedTime: 0 s
+timeLimit  : 30 s
+optimal    : No
+n          : 21
+lowerBound : 1
+upperBound : 21
+k          : 21
+nodes      : 21.2 20.17 19.1 18.3 17.4 16.7 15.5 14.6 13.18 12.19 11.20 10.11 9.14 8.8 7.9 6.15 5.13 4.16 3.12 2.10 1.21

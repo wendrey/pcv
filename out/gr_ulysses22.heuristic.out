@@ -1,0 +1,10 @@
+algorithm  : HEURISTIC
+instance   : in/gr_ulysses22
+elapsedTime: 0 s
+timeLimit  : 30 s
+optimal    : No
+n          : 22
+lowerBound : 1
+upperBound : 22
+k          : 22
+nodes      : 1.2 2.3 3.1 4.14 5.4 6.5 7.15 8.16 9.17 10.18 11.19 12.20 13.21 14.11 15.6 16.8 17.7 18.9 19.12 20.13 21.10 22.22

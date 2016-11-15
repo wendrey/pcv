@@ -5,11 +5,7 @@
 ./color.e -e -i in02/games120.col.fkm    -o out02/games120.col.fkm.exact.out  
 ./color.e -e -i in02/huck.col.fkm        -o out02/huck.col.fkm.exact.out      
 ./color.e -e -i in02/jean.col.fkm        -o out02/jean.col.fkm.exact.out      
-./color.e -e -i in02/miles1000.col.fkm   -o out02/miles1000.col.fkm.exact.out 
-./color.e -e -i in02/miles1500.col.fkm   -o out02/miles1500.col.fkm.exact.out 
 ./color.e -e -i in02/miles250.col.fkm    -o out02/miles250.col.fkm.exact.out  
-./color.e -e -i in02/miles500.col.fkm    -o out02/miles500.col.fkm.exact.out  
-./color.e -e -i in02/miles750.col.fkm    -o out02/miles750.col.fkm.exact.out  
 ./color.e -e -i in02/mulsol.i.1.col.fkm  -o out02/mulsol.i.1.col.fkm.exact.out
 ./color.e -e -i in02/mulsol.i.2.col.fkm  -o out02/mulsol.i.2.col.fkm.exact.out
 ./color.e -e -i in02/mulsol.i.3.col.fkm  -o out02/mulsol.i.3.col.fkm.exact.out
@@ -37,11 +33,7 @@
 ./color.e -h -i in02/games120.col.fkm    -o out02/games120.col.fkm.heuristic.out  
 ./color.e -h -i in02/huck.col.fkm        -o out02/huck.col.fkm.heuristic.out      
 ./color.e -h -i in02/jean.col.fkm        -o out02/jean.col.fkm.heuristic.out      
-./color.e -h -i in02/miles1000.col.fkm   -o out02/miles1000.col.fkm.heuristic.out 
-./color.e -h -i in02/miles1500.col.fkm   -o out02/miles1500.col.fkm.heuristic.out 
 ./color.e -h -i in02/miles250.col.fkm    -o out02/miles250.col.fkm.heuristic.out  
-./color.e -h -i in02/miles500.col.fkm    -o out02/miles500.col.fkm.heuristic.out  
-./color.e -h -i in02/miles750.col.fkm    -o out02/miles750.col.fkm.heuristic.out  
 ./color.e -h -i in02/mulsol.i.1.col.fkm  -o out02/mulsol.i.1.col.fkm.heuristic.out
 ./color.e -h -i in02/mulsol.i.2.col.fkm  -o out02/mulsol.i.2.col.fkm.heuristic.out
 ./color.e -h -i in02/mulsol.i.3.col.fkm  -o out02/mulsol.i.3.col.fkm.heuristic.out
